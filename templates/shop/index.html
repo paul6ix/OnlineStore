@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shop Items</title>
+    <link type="text/css" rel="stylesheet" href="{% static 'shop/css/bootstrap.css' %}">
+</head>
+<body>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <form class="card card-sm">
+                <div class="card-body row no-gutters align-items-center">
+                    <div class="col">
+                        <input class="form-control form-control-borderless " type="search" placeholder="Search Products"
+                               name="product_search">
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-success"> Search
+
+                        </button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+
+    <div class="row">
+        {% for product in products %}
+            <div class="col-md-3">
+                <div class="card">
+                    <img height="250" width="250" class="card-img-top" src="{{ product.Product_image }}">
+
+                    <div class="card-body">
+                        <div class="card-title">
+                            <h4> {{ product.product_name }} </h4>
+                        </div>
+                        <div class="card-text">
+                            Price: <b># {{ product.product_price }}</b>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        {% endfor %}
+    </div>
+
+</div>
+
+
+</body>
+</html>
