@@ -35,8 +35,9 @@
         {% for product in products %}
             <div class="col-md-3">
                 <div class="card">
-                    <img height="250" width="250" class="card-img-top" src="{{ product.Product_image }}">
-
+                    <a href="{% url 'detail' product.id %}"> <img height="250" width="250" class="card-img-top"
+                                                                  src="{{ product.Product_image }}">
+                    </a>
                     <div class="card-body">
                         <div class="card-title">
                             <h4> {{ product.product_name }} </h4>
@@ -44,6 +45,11 @@
                         <div class="card-text">
                             Price: <b># {{ product.product_price }}</b>
 
+                        </div>
+                        <div>
+                            <a href="{% url 'detail' product.id %}" class="btn btn-success"> View</a>
+
+                            <a class="btn btn-success"> Add to cart</a>
                         </div>
 
                     </div>
@@ -58,13 +64,13 @@
                 {% if products.has_previous %}
                     <li class="page-item">
 
-                    <a href="?page={{ products.previous_page_number }}"> Prev</a>
+                    <a class="page-link" href="?page={{ products.previous_page_number }}"> Prev</a>
                 {% endif %}
                 </li>
                 {% if products.has_next %}
 
                     <li class="page-item">
-                        <a href="?page={{ products.next_page_number }}">Next</a>
+                        <a class="page-link" href="?page={{ products.next_page_number }}">Next</a>
                     </li>
 
                 {% endif %}
