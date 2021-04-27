@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import ModelProduct
+from django.core.paginator import Paginator
 
 
 # Create your views here.
@@ -11,7 +12,13 @@ def product_views(request):
     if product_search != '' and product_search is not None:
         # filter with one of your models
         products = products.filter(product_name__icontains=product_search)
-
+    # creating a paginator function here
+    # set the number of products per page
+    pagination = Paginator(products, 2)
+    # getting the set name from the html template
+    pages = request.GET.get('page')
+    # setting page to march context
+    products = pagination.get_page(pages)
     context = {
         'products': products
     }
