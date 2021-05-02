@@ -6,9 +6,15 @@
     <title>Shop Items</title>
     <link type="text/css" rel="stylesheet" href="{% static 'shop/css/bootstrap.css' %}">
     <script type="text/javascript" rel="script" src="{% static 'shop/js/jquery-3.6.0.min.js' %}"></script>
+    <script type="text/javascript" rel="script" src="{% static 'shop/js/bootstrap.bundle.js' %}"></script>
+    <script type="text/javascript" rel="script" src="{% static 'shop/js/bootstrap.js' %}"></script>
 </head>
 <body>
-
+<script>
+    $(function () {
+        $('[data-toggle="popover"]').popover()
+    })
+</script>
 
 <div class="container">
     <div class="row">
@@ -28,7 +34,12 @@
                             <a class="nav-link" href="#">Features</a>
                         </li>
                         <li class="nav-item">
-                            <a id="cart_nav" class="nav-link" href="#">Cart(0)</a>
+                            <button id="cart_nav" type="button" class="btn btn-secondary" data-container="body"
+                                    data-toggle="popover"
+                                    data-placement="bottom" data-content="Vivamus
+sagittis lacus vel augue laoreet rutrum faucibus.">
+                                Cart(0)
+                            </button>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link disabled" href="#">Disabled</a>
@@ -111,6 +122,8 @@
 
 </body>
 <script type="text/javascript">
+
+
     let cart = {};
     if (localStorage.getItem('cart') == null) {
         cart;
@@ -132,6 +145,7 @@
         document.getElementById("cart_nav").innerHTML = "Cart (" + cart_item + ")"
 
     })
+
 
 </script>
 
