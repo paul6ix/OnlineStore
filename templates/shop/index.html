@@ -6,15 +6,11 @@
     <title>Shop Items</title>
     <link type="text/css" rel="stylesheet" href="{% static 'shop/css/bootstrap.css' %}">
     <script type="text/javascript" rel="script" src="{% static 'shop/js/jquery-3.6.0.min.js' %}"></script>
-    <script type="text/javascript" rel="script" src="{% static 'shop/js/bootstrap.bundle.js' %}"></script>
+    <script type="text/javascript" rel="script" src="{% static 'shop/js/popper.min.js' %}"></script>
     <script type="text/javascript" rel="script" src="{% static 'shop/js/bootstrap.js' %}"></script>
 </head>
 <body>
-<script>
-    $(function () {
-        $('[data-toggle="popover"]').popover()
-    })
-</script>
+
 
 <div class="container">
     <div class="row">
@@ -145,7 +141,10 @@ sagittis lacus vel augue laoreet rutrum faucibus.">
         document.getElementById("cart_nav").innerHTML = "Cart (" + cart_item + ")"
 
     })
-
+    $(function () {
+        $('[data-toggle="popover"]').popover()
+        document.getElementById('cart_nav').setAttribute('data-content', 'Empty Cart')
+    })
 
 </script>
 
