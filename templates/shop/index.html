@@ -30,10 +30,9 @@
                             <a class="nav-link" href="#">Features</a>
                         </li>
                         <li class="nav-item">
-                            <button id="cart_nav" type="button" class="btn btn-secondary" data-container="body"
+                            <button id="cart_nav" data-html="true" type="button" class="btn btn-secondary" data-container="body"
                                     data-toggle="popover"
-                                    data-placement="bottom" data-content="Vivamus
-sagittis lacus vel augue laoreet rutrum faucibus.">
+                                    data-placement="bottom" data-content="Empty Cart">
                                 Cart(0)
                             </button>
                         </li>
@@ -75,7 +74,7 @@ sagittis lacus vel augue laoreet rutrum faucibus.">
                     </a>
                     <div class="card-body">
                         <div class="card-title">
-                            <h4> {{ product.product_name }} </h4>
+                            <h4 id="nm{{ product.id }}"> {{ product.product_name }} </h4>
                         </div>
                         <div class="card-text">
                             Price: <b># {{ product.product_price }}</b>
@@ -143,8 +142,24 @@ sagittis lacus vel augue laoreet rutrum faucibus.">
     })
     $(function () {
         $('[data-toggle="popover"]').popover()
-        document.getElementById('cart_nav').setAttribute('data-content', 'Empty Cart')
+        ShowCart(cart)
+
     })
+
+    function ShowCart(cart) {
+        let cartItems = "";
+        cartItems += "<h5> Items in cart</h5>";
+        let cartIndex =1;
+        for (let x in cart){
+            cartItems += cartIndex;
+            cartItems += document.getElementById("nm"+x).innerHTML + ",Qty: " + cart[x] + "</br>";
+            cartIndex +=1
+        }
+        cartItems += "<a class='btn btn-success' href='/checkout'>Checkout</a>";
+        document.getElementById('cart_nav').setAttribute('data-content', cartItems)
+
+
+    }
 
 </script>
 
