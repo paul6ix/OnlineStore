@@ -1,49 +1,7 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Shop Items</title>
-    <link type="text/css" rel="stylesheet" href="{% static 'shop/css/bootstrap.css' %}">
-    <script type="text/javascript" rel="script" src="{% static 'shop/js/jquery-3.6.0.min.js' %}"></script>
-    <script type="text/javascript" rel="script" src="{% static 'shop/js/popper.min.js' %}"></script>
-    <script type="text/javascript" rel="script" src="{% static 'shop/js/bootstrap.js' %}"></script>
-</head>
-<body>
-
-
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand" href="#">Shop Lyf</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Features</a>
-                        </li>
-                        <li class="nav-item">
-                            <button id="cart_nav" data-html="true" type="button" class="btn btn-secondary" data-container="body"
-                                    data-toggle="popover"
-                                    data-placement="bottom" data-content="Empty Cart">
-                                Cart(0)
-                            </button>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link disabled" href="#">Disabled</a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-        </div>
-    </div>
+{% extends 'shop/base.html' %}
+{% block body %}
+    <html lang="en">
+    <body>
     <div class="row margin-top">
         <div class="col-md-12">
             <form class="card card-sm">
@@ -112,55 +70,59 @@
         </div>
 
     </div>
-</div>
 
 
-</body>
-<script type="text/javascript">
+    </body>
+    <script type="text/javascript">
 
 
-    let cart = {};
-    if (localStorage.getItem('cart') == null) {
-        cart;
-    } else {
-        cart = JSON.parse(localStorage.getItem('cart'));
-    }
-    $(document).on('click', '.atc', function () {
-        let id = this.id.toString();
-
-        if (cart[id] != undefined) {
-            cart[id] = cart[id] + 1;
-
+        let cart = {};
+        if (localStorage.getItem('cart') == null) {
+            cart;
         } else {
-            cart[id] = 1;
+            cart = JSON.parse(localStorage.getItem('cart'));
+        }
+        $(document).on('click', '.atc', function () {
+            let id = this.id.toString();
+
+            if (cart[id] != undefined) {
+                let quantity = cart[id][0] + 1;
+                cart[id][0] = quantity;
+
+            } else {
+                quantity = 1;
+                let name = document.getElementById("nm" + id).innerHTML;
+                cart[id] = [quantity,name];
+            }
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+           let cart_item = Object.keys(cart).length;
+            document.getElementById("cart_nav").innerHTML = "Cart (" + cart_item + ")"
+
+        })
+        $(function () {
+            $('[data-toggle="popover"]').popover()
+            ShowCart(cart)
+
+        })
+
+        function ShowCart(cart) {
+            let cartItems = "";
+            cartItems += "<h5> Items in cart</h5>";
+            let cartIndex = 1;
+            for (let x in cart) {
+                cartItems += cartIndex;
+                cartItems += document.getElementById("nm" + x).innerHTML + ",Qty: " + cart[x][0] + "</br>";
+                cartIndex += 1
+            }
+            cartItems += "<a class='btn btn-success' href='{% url 'checkout' %}'>Checkout</a>";
+            document.getElementById('cart_nav').setAttribute('data-content', cartItems)
+
+
         }
 
-        localStorage.setItem('cart', JSON.stringify(cart));
-        cart_item = Object.keys(cart).length;
-        document.getElementById("cart_nav").innerHTML = "Cart (" + cart_item + ")"
+    </script>
 
-    })
-    $(function () {
-        $('[data-toggle="popover"]').popover()
-        ShowCart(cart)
+    </html>
 
-    })
-
-    function ShowCart(cart) {
-        let cartItems = "";
-        cartItems += "<h5> Items in cart</h5>";
-        let cartIndex =1;
-        for (let x in cart){
-            cartItems += cartIndex;
-            cartItems += document.getElementById("nm"+x).innerHTML + ",Qty: " + cart[x] + "</br>";
-            cartIndex +=1
-        }
-        cartItems += "<a class='btn btn-success' href='/checkout'>Checkout</a>";
-        document.getElementById('cart_nav').setAttribute('data-content', cartItems)
-
-
-    }
-
-</script>
-
-</html>
+{% endblock %}

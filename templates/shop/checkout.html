@@ -1,0 +1,36 @@
+{% extends 'shop/base.html' %}
+<html>
+<body>
+{% block body %}
+
+    <div class="container">
+        <div class="col-md-12">
+            <div class="row">
+                <ul class="list-group" id="cart_items">
+
+
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
+
+    </body>
+    <script type="text/javascript" rel="script">
+        if (localStorage.getItem('cart') == null) {
+            let cart = {};
+        } else {
+            cart = JSON.parse(localStorage.getItem('cart'));
+        }
+        for (let items in cart) {
+            let name = cart[items][1];
+            let quantity = cart[items][0];
+            let item_list = `<li class="list-group-item">${name}--${quantity}</li>`
+            $('#cart_items').append(item_list);
+
+        }
+
+    </script>
+    </html>
+{% endblock %}

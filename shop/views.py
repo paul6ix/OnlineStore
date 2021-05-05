@@ -30,3 +30,7 @@ class ClassDetailView(DetailView):
     model = ModelProduct
     template_name = 'shop/product_detail.html'
     context_object_name = 'detail'
+
+
+def checkout_view(request):
+    return render(request, 'shop/checkout.html')
