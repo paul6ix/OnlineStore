@@ -34,8 +34,7 @@
                         <div class="card-title">
                             <h4 id="nm{{ product.id }}"> {{ product.product_name }} </h4>
                         </div>
-                        <div class="card-text">
-                            Price: <b># {{ product.product_price }}</b>
+                        <div id="price{{ product.id }}" class="card-text">{{ product.product_price }}
 
                         </div>
                         <div>
@@ -88,15 +87,18 @@
             if (cart[id] != undefined) {
                 let quantity = cart[id][0] + 1;
                 cart[id][0] = quantity;
+                cart[id][2] = cart[id][2] + parseFloat(document.getElementById("price"+id).innerHTML)
 
             } else {
                 quantity = 1;
+                let price = parseFloat(document.getElementById("price"+id).innerHTML);
                 let name = document.getElementById("nm" + id).innerHTML;
-                cart[id] = [quantity,name];
+                cart[id] = [quantity, name, price];
             }
+            console.log(cart)
 
             localStorage.setItem('cart', JSON.stringify(cart));
-           let cart_item = Object.keys(cart).length;
+            let cart_item = Object.keys(cart).length;
             document.getElementById("cart_nav").innerHTML = "Cart (" + cart_item + ")"
 
         })
